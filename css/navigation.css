@@ -14,9 +14,17 @@
   transition: 0.4s;
 }
 
+ul {
+  margin: 2px;
+}
+
+li {
+  style: none;
+}
+
 button {
   border: 1px solid black;
-  padding:2px;
+  padding: 2px;
   cursor: pointer;
   text-align: center;
   margin: 2px;
