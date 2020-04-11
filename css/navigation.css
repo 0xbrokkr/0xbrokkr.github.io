@@ -16,10 +16,7 @@
 
 ul {
   margin: 2px;
-}
-
-li {
-  style: none;
+  list-style-type: none;
 }
 
 button {
