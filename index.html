@@ -1,9 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Home</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- JavaScript Sources -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="navigation.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Hello World</h1>
+    <div class="left-navigation">
+        <div class="nav-buttons">
+           <button href="#">About</button>
+           <button class="accordion">Write-ups</button>
+           <div class="panel">
+             <ul>
+               <li><button href="#">Machines</button></li>
+               <li><button href="#">Pwn</button></li>
+             </ul>
+           </div>
+           <button href="#">Resources</button>
+        </div>
+    </div>
 </body>
 </html>
