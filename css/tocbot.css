@@ -41,7 +41,7 @@ a.toc-link {
 }
 
 .toc-link::before {
-	background-color: #EEE;
+	background-color: #ffffff;
 	content: ' ';
 	display: inline-block;
 	height: inherit;
@@ -52,5 +52,5 @@ a.toc-link {
 }
 
 .is-active-link::before {
-	background-color: #54BC4B
+	background-color: #000000;
 }
