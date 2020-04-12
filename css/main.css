@@ -1,0 +1,183 @@
+#fadewrapper {
+  display: none;
+}
+
+.page-content {
+  width: auto;
+  margin-left: 270px;
+  margin-right: 270px;
+  margin-bottom: 100px;
+}
+
+.page-content ul {
+  list-style-type: square;
+  padding: 20px 0px 0px 20px;
+}
+
+.page-content li a {
+  text-decoration: none;
+  color: #000000;
+}
+
+.abouttext {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.heading {
+  text-align: center;
+  font-size: 40px;
+}
+
+.heading img {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 40%;
+  height: auto;
+}
+.heading-text {
+  padding-top: 20px;
+}
+
+.subheading {
+  border-bottom: 1px solid black;
+  margin-left: 10px;
+  margin-right: 20px;
+}
+
+.subheading h3 {
+  font-size: 25px;
+  margin: 50px 0px 0px 0px;
+}
+
+.machinelist {
+  margin-left: 20px;
+  padding: 20px;
+  list-style-type: square;
+}
+
+.machinelist a {
+  font-size: 20px;
+  text-decoration: none;
+  color: #000000;
+}
+
+h1 {
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.writeup-text {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.writeup-img {
+  padding-left: 20px;
+  width: 50%;
+  height: auto;
+  max-width: 100%;
+}
+
+.writeup-img:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.codebox {
+  background: #1a1a1a;
+  color: #ffffff;
+  margin-left: 20px;
+  margin-top: 20px;
+  padding: 5px;
+  white-space: pre-line;
+  display: inline-block;
+  font-size: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (image) */
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 100%;
+}
+
+/* Caption of Modal Image */
+#caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #ccc;
+  padding: 10px 0;
+  height: 150px;
+}
+
+/* Add Animation */
+.modal-content, #caption {  
+  -webkit-animation-name: zoom;
+  -webkit-animation-duration: 0.6s;
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+  from {-webkit-transform:scale(0)} 
+  to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+  from {transform:scale(0)} 
+  to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+  .modal-content {
+    width: 100%;
+}
+
+.abouttext .badge {
+  text-align: center;
+}
+
+.badge a{
+  height: 50px;
+  width: 220px;   
+}

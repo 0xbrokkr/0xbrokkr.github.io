@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- JavaScript Sources -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="/css/navigation.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="left-navigation">
+        <div class="nav-buttons">
+           <button href="#">About</button>
+           <button class="accordion">Write-ups</button>
+           <div class="panel">
+             <ul>
+               <li><button class="machines" onclick="window.location.href = '/machines.html';">Machines</button></li>
+               <li><button href="#">Pwn</button></li>
+             </ul>
+           </div>
+           <button href="#">Resources</button>
+	   <button onclick="window.location.href = '/index.html';">Home</button>
+        </div>
+	<div class="contact">
+	    <div class="contact">
+ 		<p>Contact:<br>
+		   Adrian Curtean<br>
+	   	   555-555-5555<br>
+		   <a href="mailto:acurtean@asu.edu?Subject=Hey">acurtean@asu.edu</a>
+  	        </p>
+	    </div>
+	</div>
+    </div>
+    <div id="fadewrapper">
+    <div class="page-content">
+	<div class="heading">
+            <div class="heading-text">Resources</div>
+	</div>
+        <div class="subheading">
+            <h3>Windows</h3>
+        </div>
+        <ul>
+            <li><a href="https://www.fuzzysecurity.com/tutorials/16.html">Fuzzy Security's Privilege Escalation Fundamentals</a></li>
+            <li><a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Windows%20-%20Privilege%20Escalation.md">Swissky's PayloadAllTheThings</a></li>
+	    <li><a href="https://lolbas-project.github.io/#">Living off the Land Binaries and Scripts(Like gtfobins but for Windows)</a></li>
+	    <li><a href="https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/tree/master/winPEAS">Windows Privilege Escalation Awesome Scripts</a></li>
+            <li><a href="https://github.com/BloodHoundAD/BloodHound">BloodHound Active Directory Privilege Escalation</a></li>
+            <li><a href="https://isroot.nl/2018/07/09/post-exploitation-file-transfers-on-windows-the-manual-way/">Post Exploitation File Transfers</a></li>
+        </ul>
+        <div class="subheading">
+            <h3>Linux</h3>
+        </div>
+        <ul>
+            <li><a href="https://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/">g0tmi1k's Basic Linux Privilege Escalation Guide</a></li>
+            <li><a href="https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/tree/master/linPEAS">Linux Privilege Escalation Awesome Script</a></li>
+	    <li><a href="https://github.com/DominicBreuker/pspy">PSPY Process Snooper</a></li>
+            <li><a href="https://gtfobins.github.io/">GTFObins (A list of standard Unix binaries that can be used for privilege escalation)</a></li>
+        </ul>
+        <div class="subheading">
+            <h3>Web</h3>
+        </div>
+        <ul>
+            <li><a href="https://owasp.org/www-project-top-ten/">Open Web Application Security Project(OWASP)'s Top 10</a></li>
+	    <li><a href="http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet">Reverse Shell Cheat Sheet</a></li>
+	    <li><a href="https://github.com/WhiteWinterWolf/wwwolf-php-webshell">WhiteWinterWolf PHP Webshell (My personal favorite)</a></li>
+    	    <li><a href="https://www.exploit-db.com/papers/13045">MySQL SQL Injection Tutorial/Cheat Sheet</a></li>
+	    <li><a href="https://highon.coffee/blog/lfi-cheat-sheet/">Local File Inclusion Cheat Sheet</a></li>
+        </ul>
+        <div class="subheading">
+            <h3>Labs and VMs</h3>
+        </div>
+        <ul>
+           <li><a href="https://www.hackthebox.eu">Hack the Box</a></li>
+           <li><a href="https://tryhackme.com/">Try Hack Me</a></li>
+           <li><a href="https://www.vulnhub.com/">VulnHub</a></li>
+           <li><a href="https://sourceforge.net/projects/metasploitable/">Metasploitable 2</a></li>
+           <li><a href="https://google-gruyere.appspot.com/part1">Google's Gruyere</a></li>
+           <li><a href="https://github.com/bkimminich/juice-shop"> OWASP's Juice Shop</a></li>
+        </ul>
+        <div class="subheading">
+            <h3>General</h3>
+        </div>
+        <ul>
+	    <li><a href="https://www.exploit-db.com/search">Exploit Database</a></li>
+	    <li><strong><a href="https://ippsec.rocks/?#">IPPSec's Website (Arguably the most important link on my website)</a></strong></li>
+        </ul>
+    </div>
+    </div>
+</body>
+</html>

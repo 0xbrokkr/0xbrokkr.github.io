@@ -3,7 +3,13 @@
 }
 
 .left-navigation {
+  position: fixed;
   width: 250px;
+  height: 100%;
+  background-image: linear-gradient(rgb(255,255,255), rgb(217,217,217));
+  padding-right: 14px;
+  padding-left: 6px;
+  top: 8px;
 }
 
 .accordion {
@@ -34,7 +40,7 @@ button {
   padding: 2px;
   cursor: pointer;
   text-align: center;
-  margin: 2px;
+  margin-top: 4px;
   width: 100%;
   transition: 0.4s;
   font-size: 15px;
@@ -54,4 +60,37 @@ button:hover {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
+}
+
+.contact {
+  position: fixed;
+  bottom: 0px;
+  width: 250px;
+  text-align: center;
+}
+
+.contact a {
+  text-decoration: none;
+  color: #000000;
+  margin-top: 0px;
+}
+
+.right-navigation {
+  position: fixed;
+  right: 8px;
+  top: 8px;
+  margin-left: 2px;
+  width: 250px;
+  padding-right: 6px;
+  padding-left: 14px;
+}
+
+.js-toc {
+  margin-left: 5px;
+  height: 40px;
+}
+
+.js-toc a {
+  text-decoration: none;
+  font-size: 15px;
 }
