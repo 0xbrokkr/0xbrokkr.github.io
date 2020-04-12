@@ -70,12 +70,13 @@ h1 {
 
 .writeup-text {
   padding-left: 20px;
+  fontsize: 10vw;
   padding-right: 20px;
 }
 
 .writeup-img {
   padding-left: 20px;
-  width: 50%;
+  width: 75%;
   height: auto;
   max-width: 100%;
 }
@@ -180,4 +181,11 @@ h1 {
 .badge a{
   height: 50px;
   width: 220px;   
+}
+
+@media screen and (max-width: 600px) {
+  .page-content {
+    margin: 0px;
+    width: 100%;
+  }
 }
