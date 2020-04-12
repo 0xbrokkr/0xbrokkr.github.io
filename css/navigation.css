@@ -1,15 +1,36 @@
 * {
   font-family: 'Share Tech Mono', monospace;
+  box-sizing: border-box;
+}
+
+.fadewrapper {
+   margin-left: 15%;
+   margin-right: 15%;
+   width: 70%;
+}
+
+.fadewrapperabout {
+  margin-left: 15%;
+
+}
+
+.fadewrapperindex {
+  margin-left: 15%;
+}
+
+.fadewrappermachines {
+  margin-left: 15%;
+
 }
 
 .left-navigation {
   position: fixed;
-  width: 250px;
-  height: 100%;
+  width: 15%;
   background-image: linear-gradient(rgb(255,255,255), rgb(217,217,217));
-  padding-right: 14px;
-  padding-left: 6px;
-  top: 8px;
+  top: 0;
+  left: 8;
+  height: 100%;
+  padding-right: 8px;
 }
 
 .accordion {
@@ -64,9 +85,10 @@ button:hover {
 
 .contact {
   position: fixed;
-  bottom: 0px;
-  width: 250px;
-  text-align: center;
+  bottom: 0;
+  left: 0;
+  width: 15%;
+  text-align: right;
 }
 
 .contact a {
@@ -77,11 +99,10 @@ button:hover {
 
 .right-navigation {
   position: fixed;
+  width: 15%;
   right: 8px;
   top: 8px;
   margin-left: 2px;
-  width: 250px;
-  height: 100%
   padding-right: 6px;
   padding-left: 5px;
 }
@@ -97,26 +118,53 @@ button:hover {
 }
 
 @media screen and (max-width: 1140px) {
-  .left-navigation, .right-navigation {
+  .left-navigation {
     display: none;
   }
+  
+  .fadewrapper, .fadewrapperabout, 
+  .fadewrapperindex, .fadewrappermachines {
+    margin-left: 0;
+  }
+  
+   
+  .right-navigation {
+    width: 30%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .right-navigation {
+    display: none;
+  }
+
+  .fadewrapper, .fadewrapperabout, 
+  .fadewrapperindex, .fadewrappermachines {
+    width: 100%;
+    padding-right: 20px;
+  }
+  .writeup-img {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
 }
 
 .navbar {
   display: none;
   overflow: hidden;
-  background-color: #333;  
+  background-color: #ffffff;  
   position: fixed;
   bottom: 0;
   right: 0;
-  width: 50%;
+  width: 100%;
   padding: 0px;
 }
 
 .navbar a {
   float: left;
   display: block;
-  color: #f2f2f2;
+  color: #000000;
   text-align: center;
   padding: 15px;
   margin-right: 8px;
@@ -125,8 +173,8 @@ button:hover {
 }
 
 .navbar a:hover {
-  background-color: #ddd;
-  color: black;
+  background-color: #404040;
+  color: white;
 }
 
 .navbar a.active {

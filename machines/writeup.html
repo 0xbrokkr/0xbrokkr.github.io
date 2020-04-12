@@ -42,14 +42,14 @@
 	    </div>
 	</div>
     </div>
-    <div id="fadewrapper">
+    <div class="fadewrapper">
 	<div class="page-content">
 	    <div class="heading">
 		<div class="heading-text" id="0">HtB - Writeup</div>
 	 	<img src="/images/writeup/writeup.jpeg" alt="machine logo">
             </div>
 	    <div class="subheading">
-		<h3 id="1">Initial Recon</h3>
+			<h3 id="1">Initial Recon</h3>
 	    </div>
 	    <p class="writeup-text">We always begin the initial recon phase with an nmap scan.</p>
 	    <code class="codebox">root@kali:~# nmap -sC -sV 10.10.10.138
@@ -90,12 +90,11 @@
 	    <p class="writeup-text">We can see that the CMS for the webserver is CMS Made Simple. Using our good friend 
 	    exploit-db.com, we find a <a href="https://www.exploit-db.com/exploits/46635">python script</a> that will 
 	    automagically perform a bruteforce SQL injection attack and retrieve both a username and a password for us!</p>
-    	    <div class="subheading">
-                <h3 id="3">SQL Injection + user.txt</h3>
-            </div>
-            <code class="codebox">root@kali:~/HTB/Writeup# python cmsmsexploit.py -u http://10.10.10.138/writeup -w /usr/share/wordlists/rockyou.txt
-			
-  window.onclick = function(ev
+		<div class="subheading">
+			<h3 id="3">SQL Injection + user.txt</h3>
+		</div>
+		<code class="codebox">root@kali:~/HTB/Writeup# python cmsmsexploit.py -u http://10.10.10.138/writeup -w /usr/share/wordlists/rockyou.txt
+
 		[+] Salt for password found: 5a599ef579066807
 		[+] Username found: jkr
 		[+] Email found: jkr@writeup.htb
@@ -140,28 +139,28 @@
 	    <p class="writeup-text">All that is left to do is setup our netcat listener and SSH back in to trigger the running of our malicious 
 	    <code>run-parts</code>.</p>
 	    <img class="writeup-img" src="/images/writeup/root.png" alt="root exploit and root.txt">
+		<!-- The Modal -->
+		<div id="myModal" class="modal">
+
+			<!-- The Close Button -->
+			<span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+
+			<!-- Modal Content (The Image) -->
+			<img class="modal-content" id="img01">
+
+			<!-- Modal Caption (Image Text) -->
+			<div id="caption"></div>
         </div>
-	<!-- The Modal -->
-	<div id="myModal" class="modal">
-
-        <!-- The Close Button -->
-        <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
-
-        <!-- Modal Content (The Image) -->
-        <img class="modal-content" id="img01">
-
-        <!-- Modal Caption (Image Text) -->
-        <div id="caption"></div>
-        </div>
+    </div>
     </div>
 	<div class="right-navigation">
    	   <div class="js-toc"></div>
 	</div>
     <div class="navbar" id="myNavbar">
- 	<a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="mobileNav()">&#9776;</a>
-  	<a href="/index.html">Home</a>
-  	<a href="/machines.html">Machines</a>
-  	<a href="/about.html">About</a>
+		<a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="mobileNav()">Menu &#9776;</a>
+		<a class="navsub" href="/index.html">Home</a>
+		<a class="navsub" href="/machines.html">Machines</a>
+		<a class="navsub" href="/about.html">About</a>
     </div>
 </body>
 </html>
