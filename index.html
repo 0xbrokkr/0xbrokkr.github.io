@@ -9,6 +9,7 @@
     <script src="/js/main.js"></script>
 
     <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="/css/cards.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
     <link rel="stylesheet" type="text/css" href="/css/navigation.css">
 
@@ -39,17 +40,61 @@
 	</div>
     </div>
     <div class="fadewrapperindex">
-    <div class="page-content">
-        <h1>Just Another Security Blog</h1>
+      <div class="page-content">
+        <section class="hero">
+          <div class="hero-content">
+            <h1 class="hero-title">
+              Just Another Security Blog
+            </h1>
+          </div>
+        </section>
+      </div>
+      <div class="articles">
+        <h3>Recent writeups</h3>
+      </div>      
+      <section class="cards-wrapper">
+        <div class="card-grid-space">
+          <a class="card" href="/machines/writeup.html" style="--bg-img: url(/images/writeup/writeup.jpeg)">
+            <div>
+              <h1>HtB - Writeup</h1>
+              <p>20 Points</p>
+              <div class="tags">
+                <div class="tag">Machines</div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="card-grid-space">
+          <a class="card" href="/machines/jarvis.html" style="--bg-img: url('/images/jarvis/jarvis.png')">
+            <div>
+              <h1>HtB - Jarvis</h1>
+              <p>30 Points</p>
+              <div class="tags">
+                <div class="tag">Machines</div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="card-grid-space">
+          <a class="card" href="#" style="background-color: #000000">
+            <div>
+              <h1>Coming soon...</h1>
+              <p>More writeups</p>
+              <div class="tags">
+                <div class="tag">ToDo</div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </section>
     </div>
-    </div>
-     <div class="navbar" id="myNavbar">
-        <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="mobileNav()">Menu &#9776;</a>
-        <a href="/index.html">Home</a>
-		<a href="/resources.html">Resources</a>
-        <a href="/machines.html">Machines</a>
-		<a href="/pwn.html">Pwn</a>
-        <a href="/about.html">About</a>
+    <div class="navbar" id="myNavbar">
+      <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="mobileNav()">Menu &#9776;</a>
+      <a href="/index.html">Home</a>
+      <a href="/resources.html">Resources</a>
+      <a href="/machines.html">Machines</a>
+      <a href="/pwn.html">Pwn</a>
+      <a href="/about.html">About</a>
     </div>
 </body>
 </html>
