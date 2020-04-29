@@ -74,12 +74,12 @@
 }
 
 .subheading {
-  border-bottom: 1px solid black;
   margin-left: 10px;
   margin-right: 20px;
 }
 
 .subheading h3 {
+  text-align: left;
   font-size: 25px;
   margin: 50px 0px 0px 0px;
 }

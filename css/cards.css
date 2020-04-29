@@ -11,19 +11,19 @@
   grid-gap: 4rem;
   padding: 4rem;
   margin: 0 auto;
-  width: max-content;
+  width: 100%;
 }
 
 .card {
   --bg-filter-opacity: 0.5;
   background-image: linear-gradient(rgba(0,0,0,var(--bg-filter-opacity)),rgba(0,0,0,var(--bg-filter-opacity))), var(--bg-img);
-  height: 10em;
-  width: 20em;
+  height: 10%;
+  width: 100%;
   font-size: 1.5em;
   color: white;
   border-radius: 1em;
   padding: 1em;
-  /*margin: 2em;*/
+  margin: 2px;
   display: flex;
   align-items: flex-end;
   background-size: cover;
@@ -43,7 +43,7 @@
 .card h1 {
   font-family: "Lucida Console", monospace;
   margin: 0;
-  font-size: 1.5em;
+  font-size: 25px;
   line-height: 1.2em;
 }
 
